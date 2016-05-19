@@ -1,22 +1,48 @@
 package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Tree;
 
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.LinkedList;
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.List;
+
 public class TreeImpl<T> implements Tree<T> {
 
+	Node<T> raiz;
+	int cantidadNodos;
+	
+	public TreeImpl() {
+		raiz = new NodeImpl();
+		cantidadNodos = 0;
+	}
+	
+	public TreeImpl(Node<T> padreDeTodo){
+		raiz = new NodeImpl(padreDeTodo.getData(), padreDeTodo);
+		cantidadNodos = 0;
+	}
+	
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return cantidadNodos == 0;
 	}
 
 	@Override
 	public Node<T> getRoot() {
-		// TODO Auto-generated method stub
-		return null;
+		return raiz;
 	}
 
 	@Override
 	public boolean exists(T key) {
-		// TODO Auto-generated method stub
+		
+		return false;
+	}
+	
+	public boolean existsRec(NodeImpl<T> nodo, T key){
+		if (nodo.getData() == key){
+			return true;
+		} else if (nodo.getChildren() != null){
+			LinkedList<Node<T>> lista = (LinkedList<Node<T>>) nodo.getChildren();
+			for (int i=0; i<lista.size(); i++){
+				return existsRec(lista.get(i), key);
+			}
+		}
 		return false;
 	}
 

@@ -1,5 +1,7 @@
 package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Tree;
 
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.List;
+
 public interface Node<T> {
 	/**
 	 * Añade un hijo a un nodo
