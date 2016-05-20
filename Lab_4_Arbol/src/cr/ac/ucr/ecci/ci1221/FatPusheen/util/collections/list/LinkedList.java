@@ -100,6 +100,7 @@ public class LinkedList<E> implements List<E> {
 
 	/**
 	 * Returns the element at the given position.
+	 * Works from 1 to list.size()
 	 *
 	 * @param position
 	 *            the position.

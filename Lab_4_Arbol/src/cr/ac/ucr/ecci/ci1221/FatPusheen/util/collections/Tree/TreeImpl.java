@@ -34,28 +34,28 @@ public class TreeImpl<T> implements Tree<T> {
 		return false;
 	}
 	
-	public boolean existsRec(NodeImpl<T> nodo, T key){
+	public boolean existsRec(Node<T> nodo, T key){
 		if (nodo.getData() == key){
 			return true;
 		} else if (nodo.getChildren() != null){
 			LinkedList<Node<T>> lista = (LinkedList<Node<T>>) nodo.getChildren();
-			for (int i=0; i<lista.size(); i++){
-				return existsRec(lista.get(i), key);
+			boolean comprobacion = false;
+			for (int i=1; i<=lista.size(); i++){
+				comprobacion = existsRec(lista.get(i), key);
 			}
+			return comprobacion;
 		}
 		return false;
 	}
 
 	@Override
 	public int getNumberOfNodes() {
-		// TODO Auto-generated method stub
-		return 0;
+		return cantidadNodos;
 	}
 
 	@Override
 	public int getNumberOfDescendants(Node<T> node) {
-		// TODO Auto-generated method stub
-		return 0;
+		return (node.getChildren()).size();
 	}
 
 	@Override
