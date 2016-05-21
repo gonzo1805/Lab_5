@@ -3,24 +3,18 @@ package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Tree;
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.LinkedList;
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.List;
 
+
 public class TreeImpl<T> implements Tree<T> {
 
 	Node<T> raiz;
-	int cantidadNodos;
-	
-	public TreeImpl() {
-		raiz = new NodeImpl();
-		cantidadNodos = 0;
-	}
 	
 	public TreeImpl(Node<T> padreDeTodo){
-		raiz = new NodeImpl(padreDeTodo.getData(), padreDeTodo);
-		cantidadNodos = 0;
+		raiz = padreDeTodo;
 	}
 	
 	@Override
 	public boolean isEmpty() {
-		return cantidadNodos == 0;
+		return getNumberOfNodes() == 0;
 	}
 
 	@Override
@@ -29,16 +23,15 @@ public class TreeImpl<T> implements Tree<T> {
 	}
 
 	@Override
-	public boolean exists(T key) {
-		
-		return false;
+	public boolean exists(T key) {	
+		return existsRec(raiz, key);
 	}
 	
 	public boolean existsRec(Node<T> nodo, T key){
-		if (nodo.getData() == key){
+		if (nodo.getData().equals(key)){
 			return true;
 		} else if (nodo.getChildren() != null){
-			LinkedList<Node<T>> lista = (LinkedList<Node<T>>) nodo.getChildren();
+			List<Node<T>> lista = nodo.getChildren();
 			boolean comprobacion = false;
 			for (int i=1; i<=lista.size(); i++){
 				comprobacion = existsRec(lista.get(i), key);
@@ -50,7 +43,19 @@ public class TreeImpl<T> implements Tree<T> {
 
 	@Override
 	public int getNumberOfNodes() {
-		return cantidadNodos;
+		int contador = 0;
+		return getNumberOfNodesRec(contador, raiz);
+	}
+	
+	public int getNumberOfNodesRec(int contador, Node<T> nodo){
+		contador++;
+		if (nodo.getChildren() != null){
+			List<Node<T>> lista = nodo.getChildren();
+			for (int i=1; i<=lista.size(); i++){
+				contador = getNumberOfNodesRec(contador, lista.get(i));
+			}
+		}
+		return contador;
 	}
 
 	@Override
@@ -74,6 +79,11 @@ public class TreeImpl<T> implements Tree<T> {
 	public List<Node<T>> getPostOrderTraversal() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public List<Node<T>> auxiliarRecorrido(Node<T> nodo, LinkedList<Node<T>> lista){
+		lista.add(nodo);
+		return lista;
 	}
 
 	@Override

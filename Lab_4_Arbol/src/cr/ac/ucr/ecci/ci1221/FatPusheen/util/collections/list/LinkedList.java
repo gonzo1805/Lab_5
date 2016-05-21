@@ -3,8 +3,9 @@ package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list;
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
 
 /**
- * Implementation of a List model using a linked list data structure.
- *
+ * Implementation of a List model using a linked list data structure. All the
+ * implementation use the [1, n] numbers system.
+ * 
  * @param <E>
  *            the type of the elements that the list holds.
  */
@@ -24,7 +25,11 @@ public class LinkedList<E> implements List<E> {
 	 */
 	@Override
 	public void add(E element, int position) {
-		if (position > cantidadNodos || cantidadNodos == 0 || position == cantidadNodos) {
+		if (position > 1 + cantidadNodos || position == 0) {
+			ArrayIndexOutOfBoundsException f = new ArrayIndexOutOfBoundsException(
+					"La lista no tiene la posicion a la que se desea insertar");
+			throw f;
+		} else if (cantidadNodos == 0 || position - 1 == cantidadNodos) {
 			add(element);
 		} else if (position - 1 == 0) {
 			Nodo nodo = new Nodo(element);
@@ -53,7 +58,11 @@ public class LinkedList<E> implements List<E> {
 	 */
 	@Override
 	public void remove(int position) {
-		if (position - 1 == 0) {
+		if (position > cantidadNodos || position == 0) {
+			ArrayIndexOutOfBoundsException f = new ArrayIndexOutOfBoundsException(
+					"La posicion que se quiere eliminar no existe");
+			throw f;
+		} else if (position == 1) {
 			cabeza = cabeza.getNext();
 			cantidadNodos--;
 		} else if (position == cantidadNodos) {
@@ -66,7 +75,7 @@ public class LinkedList<E> implements List<E> {
 			anterior.setNext(null);
 			cantidadNodos--;
 			cola = anterior;
-		} else if (position - 1 > 1) {
+		} else if (position > 1) {
 			Nodo nodo = cabeza;
 			Nodo anterior = cabeza;
 			for (int i = 0; i < position - 1; i++) {
@@ -88,9 +97,9 @@ public class LinkedList<E> implements List<E> {
 	@Override
 	public int find(E element) {
 		Nodo nodo = cabeza;
-		for (int i = 0; i <= cantidadNodos; i++) {
+		for (int i = 1; i <= cantidadNodos; i++) {
 			if (nodo.getValor() == element) {
-				return i + 1;
+				return i;
 			}
 			nodo = nodo.getNext();
 		}
@@ -99,8 +108,7 @@ public class LinkedList<E> implements List<E> {
 	}
 
 	/**
-	 * Returns the element at the given position.
-	 * Works from 1 to list.size()
+	 * Returns the element at the given position. Works from 1 to list.size()
 	 *
 	 * @param position
 	 *            the position.
@@ -108,12 +116,12 @@ public class LinkedList<E> implements List<E> {
 	 */
 	@Override
 	public E get(int position) {
-		if (cabeza == null) {
+		if (position > cantidadNodos || position == 0) {
+			ArrayIndexOutOfBoundsException f = new ArrayIndexOutOfBoundsException(
+					"La posicion que se quiere buscar no existe");
+			throw f;
+		} else if (cabeza == null) {
 			System.out.println("La lista esta vacia");
-			return null;
-		} else if (position > cantidadNodos || position < 0) {
-			System.out.println(
-					"Se solicito un espacio en la lista que esta no posee porque es mas grande que la misma, o porque la posicion es negativa se retornara un null");
 			return null;
 		}
 		Nodo nodo = cabeza;
@@ -135,19 +143,26 @@ public class LinkedList<E> implements List<E> {
 	 */
 	@Override
 	public E set(int position, E element) {
-		E retorno;
-		if (position - 1 == 0) {
+		if (position > cantidadNodos || position == 0) {
+			ArrayIndexOutOfBoundsException f = new ArrayIndexOutOfBoundsException(
+					"La posicion que se quiere insertar no existe");
+			throw f;
+		} else if (position == 1) {
+			E retorno;
 			retorno = cabeza.getValor();
 			cabeza.setValor(element);
 			return retorno;
-		}
-		Nodo actual = cabeza;
-
-		if (position - 1 > 0) {
+		} else if (position == cantidadNodos) {
+			E retorno;
+			retorno = cola.getValor();
+			cola.setValor(element);
+			return retorno;
+		} else if (position > 1) {
+			Nodo actual = cabeza;
 			for (int i = 0; i < position - 1; i++) {
 				actual = actual.getNext();
 			}
-
+			E retorno;
 			retorno = actual.getValor();
 			actual.setValor(element);
 			return retorno;

@@ -5,21 +5,23 @@ import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.*;
 public class NodeImpl<T> implements Node<T> {
 
 	Node<T> padre;
-	LinkedList<Node<T>> hijos;
+	List<Node<T>> hijos;
 	T dato;
 
-	public NodeImpl() {
-		hijos = new LinkedList();
-	}
-
-	public NodeImpl(T contenido, Node<T> pa) {
-		hijos = new LinkedList();
-		dato = contenido;
-		padre = pa;
+	public NodeImpl(T contenido, NodeImpl<T> pa) {
+		if (pa == null) {
+			this.dato = contenido;
+		} else if (pa != null) {
+			this.dato = contenido;
+			this.padre = pa;
+			pa.addChild(this);
+		}
 	}
 
 	@Override
 	public void addChild(Node<T> child) {
+		if (this.hijos == null)
+			this.hijos = new LinkedList();
 		this.hijos.add(child);
 	}
 
@@ -68,7 +70,8 @@ public class NodeImpl<T> implements Node<T> {
 
 	@Override
 	public List<Node<T>> getChildren() {
-		if (this.hijos.size() == 0) return null;
+		if (this.hijos == null)
+			return null;
 		return this.hijos;
 	}
 
