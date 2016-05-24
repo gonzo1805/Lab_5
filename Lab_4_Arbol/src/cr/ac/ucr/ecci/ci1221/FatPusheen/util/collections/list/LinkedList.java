@@ -9,11 +9,18 @@ import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
  * @param <E>
  *            the type of the elements that the list holds.
  */
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class LinkedList<E> implements List<E> {
 
 	private Nodo cabeza;
-	private int cantidadNodos = 0;
+	private int cantidadNodos;
 	private Nodo cola;
+	
+	public LinkedList(){
+		cabeza = new Nodo();
+		cantidadNodos = 0;
+		cola = cabeza;
+	}
 
 	/**
 	 * Adds the given element to the given position.
@@ -270,6 +277,7 @@ public class LinkedList<E> implements List<E> {
 
 	}
 
+	
 	private class B<E> implements Iterator<E> {
 		int actual = 0;
 
@@ -280,8 +288,7 @@ public class LinkedList<E> implements List<E> {
 
 		@Override
 		public E next() {
-			int a = actual;
-			int b = cantidadNodos;
+
 			if (actual == cantidadNodos) {
 				System.out.println("Ya esta en el final de la lista");
 				return null;
