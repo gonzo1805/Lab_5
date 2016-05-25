@@ -11,7 +11,7 @@ import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.*;
  * @param <T>
  *            Cualquier cosa ingresada
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+
 public class NodeImpl<T> implements Node<T> {
 
 	/**

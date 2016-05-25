@@ -12,7 +12,7 @@ import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.List;
  * @param <T>
  *            Tipo de dato a usar
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+
 public class TreeImpl<T> implements Tree<T> {
 
 	/**
@@ -22,6 +22,14 @@ public class TreeImpl<T> implements Tree<T> {
 	 *            La raiz del arbol
 	 */
 	Node<T> raiz;
+
+	public TreeImpl(T valor, Tree<T>... arboles) {
+		raiz = new NodeImpl<T>(valor, null);
+		for (int i = 0; i < arboles.length - 1; i++) {
+			raiz.addChild(arboles[i].getRoot());
+			(arboles[i].getRoot()).setParent(raiz);
+		}
+	}
 
 	/**
 	 * Constructor del arbol
@@ -75,7 +83,7 @@ public class TreeImpl<T> implements Tree<T> {
 	 *            el dato o nodo que se quiere buscar
 	 * @return si existe o no el nodo o dato en el arbol
 	 */
-	public boolean existsRec(Node<T> nodo, T key) {
+	private boolean existsRec(Node<T> nodo, T key) {
 		if (nodo.getData().equals(key)) {// Si existe el nodo en el arbol
 			return true;
 		} else if (nodo.getChildren() != null) {// Si tiene hijos
@@ -112,7 +120,7 @@ public class TreeImpl<T> implements Tree<T> {
 	 *            la raiz del arbol
 	 * @return la cantidad de nodos en el arbol
 	 */
-	public int getNumberOfNodesRec(int contador, Node<T> nodo) {
+	private int getNumberOfNodesRec(int contador, Node<T> nodo) {
 		contador++;// Si este metodo entra es porque entro a un nodo por lo que
 					// se suma 1
 		if (nodo.getChildren() != null) {// Si tiene hijos
@@ -160,7 +168,7 @@ public class TreeImpl<T> implements Tree<T> {
 	 *            la lista donde se guardan las cosas
 	 * @return la lista con todos los datos ordenados en forma de PreOrden
 	 */
-	public List<Node<T>> auxiliarRecorridoPre(Node<T> nodo, List<Node<T>> lista) {
+	private List<Node<T>> auxiliarRecorridoPre(Node<T> nodo, List<Node<T>> lista) {
 		lista.add(nodo);// Inserta en la lista
 		if (nodo.getChildren() != null) {// Si tiene hijo
 			List<Node<T>> hijos = nodo.getChildren();// Hijos
@@ -190,7 +198,7 @@ public class TreeImpl<T> implements Tree<T> {
 	 * @param raiz
 	 * @return
 	 */
-	public List<Node<T>> auxiliarRecorridoIn(Node<T> nodo, List<Node<T>> lista, Node<T> raiz) {
+	private List<Node<T>> auxiliarRecorridoIn(Node<T> nodo, List<Node<T>> lista, Node<T> raiz) {
 		lista.add(nodo);
 		if (nodo.getChildren() != null) {
 			List<Node<T>> hijos = nodo.getChildren();
@@ -222,7 +230,7 @@ public class TreeImpl<T> implements Tree<T> {
 	 *            la lista donde se guardan las cosas
 	 * @return la lista con todos los datos ordenados en forma de PostOrden
 	 */
-	public List<Node<T>> auxiliarRecorridoPost(Node<T> nodo, List<Node<T>> lista) {
+	private List<Node<T>> auxiliarRecorridoPost(Node<T> nodo, List<Node<T>> lista) {
 		if (nodo.getChildren() != null) {// Si tiene hijos
 			List<Node<T>> hijos = nodo.getChildren();// Hijos
 			for (int i = 1; i <= hijos.size(); i++) {
@@ -261,7 +269,7 @@ public class TreeImpl<T> implements Tree<T> {
 	 *            el camino de la raiz hasta ret
 	 * @return una lista con el camino completo desde la raiz hasta ret
 	 */
-	public List<Node<T>> completaCamino(Node<T> ret, List<Node<T>> camino) {
+	private List<Node<T>> completaCamino(Node<T> ret, List<Node<T>> camino) {
 		boolean comp = true;// Comprobacion
 		camino.add(ret);// Añadimos el nodo al camino
 		while (comp) {
@@ -289,7 +297,7 @@ public class TreeImpl<T> implements Tree<T> {
 	 *            el nodo mas profundo
 	 * @return el nodo mas profundo
 	 */
-	public Node<T> LongestPathRec(Node<T> nodo, int prof, Node<T> ret) {
+	private Node<T> LongestPathRec(Node<T> nodo, int prof, Node<T> ret) {
 		if (nodo.getChildren() != null) {// Si tiene hijos
 			prof++;// Aumenta la profundidad
 			if (prof == this.getMaxDepth()) {// Si es el mas profundo

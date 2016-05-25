@@ -28,7 +28,7 @@ public class MainArbol {
 		System.out.println(arbol.getNumberOfNodes() + " GetNumberOfNodes");
 		System.out.println(arbol.isEmpty() + " Vacio?");
 		List<Node<String>> lista = new LinkedList();
-		lista = arbol.getInOrderTraversal();
+		lista = arbol.getPostOrderTraversal();
 		System.out.print("Lista de recorrido: ");
 		for (int i = 1; i <= lista.size(); i++) {
 			System.out.print(lista.get(i).getData() + " ");

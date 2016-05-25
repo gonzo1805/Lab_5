@@ -9,7 +9,7 @@ import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
  * @param <E>
  *            the type of the elements that the list holds.
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+
 public class LinkedList<E> implements List<E> {
 
 	private Nodo cabeza;
