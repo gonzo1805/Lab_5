@@ -4,49 +4,65 @@ public interface Conjunto<T> {
 
 	/**
 	 * 
+	 * @param A
+	 * @param B
+	 * @param C
 	 * @return
 	 */
-	Conjunto<T> union();
-	
+	Conjunto<T> union(Conjunto<T> A, Conjunto<T> B);
+
 	/**
 	 * 
+	 * @param A
+	 * @param B
+	 * @param C
 	 * @return
 	 */
-	Conjunto<T> intersection();
-	
+	Conjunto<T> intersection(Conjunto<T> A, Conjunto<T> B);
+
 	/**
 	 * 
+	 * @param A
+	 * @param B
+	 * @param C
 	 * @return
 	 */
-	Conjunto<T> difference();
-	
+	Conjunto<T> difference(Conjunto<T> A, Conjunto<T> B);
+
 	/**
 	 * 
+	 * @param dato
+	 * @param A
 	 * @return
 	 */
-	Conjunto<T> contains();
-	
+	boolean contains(T dato);
+
 	/**
 	 * 
+	 * @param A
 	 */
 	void clear();
-	
+
 	/**
 	 * 
 	 * @param dato
+	 * @param A
 	 */
 	void add(T dato);
-	
+
 	/**
 	 * 
 	 * @param dato
+	 * @param A
 	 */
 	void remove(T dato);
-	
+
 	/**
 	 * 
-	 * @param dato
+	 * @param A
 	 * @return
 	 */
-	boolean Equals(Conjunto<T> dato);
+	boolean Equals(Conjunto<T> A);
+
+	
 }

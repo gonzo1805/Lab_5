@@ -57,7 +57,7 @@ public class NodeImpl<T> implements Node<T> {
 	@Override
 	public void addChild(Node<T> child) {
 		if (this.hijos == null)// Si no tiene hijos
-			this.hijos = new LinkedList();// Inicia lista
+			this.hijos = new LinkedList<Node<T>>();// Inicia lista
 		this.hijos.add(child);
 	}
 

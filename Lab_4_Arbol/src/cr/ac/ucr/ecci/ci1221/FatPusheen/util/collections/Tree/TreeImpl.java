@@ -23,16 +23,44 @@ public class TreeImpl<T> implements Tree<T> {
 	 */
 	Node<T> raiz;
 
+	/**
+	 * Constructor del arbol, este recibe un valor de tipo T y un vector lleno
+	 * con arboles, lo que hace el constructor es crear un nuevo nodo con el
+	 * dato enviado por parametro y convertirlo en el padre de todos los arboles
+	 * enviados en arboles
+	 * 
+	 * @param valor
+	 *            dato de la nueva raiz general
+	 * @param arboles
+	 *            todos los arboles que tendran el nodo de valor como nueva raiz
+	 */
+	@SafeVarargs
 	public TreeImpl(T valor, Tree<T>... arboles) {
-		raiz = new NodeImpl<T>(valor, null);
-		for (int i = 0; i < arboles.length - 1; i++) {
-			raiz.addChild(arboles[i].getRoot());
-			(arboles[i].getRoot()).setParent(raiz);
+		raiz = new NodeImpl<T>(valor, null);// Crea nueva raiz(Null dice que es
+											// raiz)
+		for (int i = 0; i < arboles.length; i++) {// Por el vector de
+														// arboles
+			raiz.addChild(arboles[i].getRoot());// Añade la raiz de esos arboles
+												// como hijos de la nueva raiz
+			(arboles[i].getRoot()).setParent(raiz);// Les asigna la nueva raiz
+													// como padre
 		}
 	}
 
 	/**
-	 * Constructor del arbol
+	 * Constructor de arbol, este recibe un dato y crea un nodo a partir de ese
+	 * dato, ese nodo es la raiz de un nuevo arbol
+	 * 
+	 * @param dato
+	 *            el dato que ira dentro de la nueva raiz
+	 */
+	public TreeImpl(T dato) {
+		raiz = new NodeImpl<T>(dato, null);// El null dice que es raiz
+	}
+
+	/**
+	 * Constructor del arbol, este recibe un nodo y crea un nuevo arbol a partir
+	 * de ese dato
 	 * 
 	 * @param padreDeTodo
 	 *            El nodo que sera la raiz y primer nodo del nuevo arbol
@@ -154,7 +182,8 @@ public class TreeImpl<T> implements Tree<T> {
 	 */
 	@Override
 	public List<Node<T>> getPreOrderTraversal() {
-		List<Node<T>> lista = new LinkedList();// La lista para el recursivo
+		List<Node<T>> lista = new LinkedList<Node<T>>();// La lista para el
+														// recursivo
 		return auxiliarRecorridoPre(raiz, lista);
 	}
 
@@ -181,28 +210,31 @@ public class TreeImpl<T> implements Tree<T> {
 
 	/**
 	 * Retorna una lista con todos los datos del arbol en In-Orden
+	 * El metodo InOrden no se pudo implementar, por lo que en si cuando es llamado no hara nada
 	 * 
 	 * @return una lista con todos los datos del arbol en In-Orden
 	 */
 	@Override
 	public List<Node<T>> getInOrderTraversal() {
-		List<Node<T>> lista = new LinkedList();// Lista para el recursivo
+		List<Node<T>> lista = new LinkedList<Node<T>>();// Lista para el
+														// recursivo
 		lista = auxiliarRecorridoIn(raiz, lista, raiz);
 		return lista;
 	}
 
 	/**
-	 * 
+	 * El metodo InOrden no se pudo implementar, por lo que en si cuando es llamado no hara nada
 	 * @param nodo
 	 * @param lista
 	 * @param raiz
 	 * @return
 	 */
 	private List<Node<T>> auxiliarRecorridoIn(Node<T> nodo, List<Node<T>> lista, Node<T> raiz) {
-		lista.add(nodo);
+		
 		if (nodo.getChildren() != null) {
 			List<Node<T>> hijos = nodo.getChildren();
 			for (int i = 1; i <= hijos.size(); i++) {
+				
 				auxiliarRecorridoIn(hijos.get(i), lista, raiz);
 			}
 		}
@@ -216,7 +248,8 @@ public class TreeImpl<T> implements Tree<T> {
 	 */
 	@Override
 	public List<Node<T>> getPostOrderTraversal() {
-		List<Node<T>> lista = new LinkedList();// Lista para el recursivo
+		List<Node<T>> lista = new LinkedList<Node<T>>();// Lista para el
+														// recursivo
 		return auxiliarRecorridoPost(raiz, lista);
 	}
 
@@ -248,7 +281,8 @@ public class TreeImpl<T> implements Tree<T> {
 	 */
 	@Override
 	public List<Node<T>> getLongestPathFromRootToAnyLeaf() {
-		List<Node<T>> camino = new LinkedList();// La lista que se retornara
+		List<Node<T>> camino = new LinkedList<Node<T>>();// La lista que se
+															// retornara
 		int prof = 1;// La profundidad actual
 		Node<T> ret = null;// El nodo mas profundo
 		ret = LongestPathRec(raiz, prof, ret);// Metodo
@@ -361,14 +395,18 @@ public class TreeImpl<T> implements Tree<T> {
 	 */
 	@Override
 	public List<List<Node<T>>> getPathsFromRootToAnyLeaf() {
-		List<Node<T>> listaHojas = new LinkedList();// Lista con todas las hojas
-													// del arbol
+		List<Node<T>> listaHojas = new LinkedList<Node<T>>();// Lista con todas
+																// las hojas
+		// del arbol
 		listaHojas = listaHojas(raiz, listaHojas);// Hojas
-		List<List<Node<T>>> listaFinal = new LinkedList();// Lista con todos los
-															// caminos de la
-															// raiz a las hojas
+		List<List<Node<T>>> listaFinal = new LinkedList<List<Node<T>>>();// Lista
+																			// con
+																			// todos
+																			// los
+		// caminos de la
+		// raiz a las hojas
 		for (int i = 1; i <= listaHojas.size(); i++) {
-			List<Node<T>> lista = new LinkedList();
+			List<Node<T>> lista = new LinkedList<Node<T>>();
 			listaFinal.add(completaCamino(listaHojas.get(i), lista));// Crea
 																		// los
 																		// caminos

@@ -17,6 +17,11 @@ public class ArrayList<E> implements List<E> {
 		lista = (E[]) new Object[100];
 		cantidadDatos = 0;
 	}
+	
+	public ArrayList(int tamano){
+		lista = (E[]) new Object[tamano];
+		cantidadDatos = 0;
+	}
 
 	/**
 	 * Adds the given element to the given position.
@@ -78,7 +83,6 @@ public class ArrayList<E> implements List<E> {
 		for (int i = position - 1; i < cantidadDatos; i++) {
 			lista[i] = lista[i + 1];
 		}
-		// lista[cantidadDatos - 1] = null;
 		cantidadDatos--;
 	}
 
@@ -195,7 +199,7 @@ public class ArrayList<E> implements List<E> {
 	 */
 	@Override
 	public void clear() {
-		lista = (E[]) new Object[1];
+		lista = (E[]) new Object[100];
 		cantidadDatos = 0;
 	}
 
@@ -206,7 +210,7 @@ public class ArrayList<E> implements List<E> {
 	 */
 	@Override
 	public Iterator<E> iterator() {
-		return new It();
+		return new It<E>();
 	}
 
 	/**

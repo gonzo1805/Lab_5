@@ -4,49 +4,70 @@ public interface ConjuntoNumerable<T extends Enumerable> {
 
 	/**
 	 * 
+	 * @param A
+	 * @param B
+	 * @param C
 	 * @return
 	 */
-	ConjuntoNumerable<T> union();
-	
+	ConjuntoNumerable<T> union(BitsVectorSetImpl<T> A, BitsVectorSetImpl<T> B, BitsVectorSetImpl<T> C);
+
 	/**
 	 * 
+	 * @param A
+	 * @param B
+	 * @param C
 	 * @return
 	 */
-	ConjuntoNumerable<T> intersection();
-	
+	ConjuntoNumerable<T> intersection(ConjuntoNumerable<T> A, ConjuntoNumerable<T> B, ConjuntoNumerable<T> C);
+
 	/**
 	 * 
+	 * @param A
+	 * @param B
+	 * @param C
 	 * @return
 	 */
-	ConjuntoNumerable<T> difference();
-	
-	/**
-	 * 
-	 * @return
-	 */
-	ConjuntoNumerable<T> contains();
-	
-	/**
-	 * 
-	 */
-	void clear();
-	
+	ConjuntoNumerable<T> difference(ConjuntoNumerable<T> A, ConjuntoNumerable<T> B, ConjuntoNumerable<T> C);
+
 	/**
 	 * 
 	 * @param dato
+	 * @param A
+	 * @return
 	 */
-	void add(T dato);
-	
-	/**
-	 * 
-	 * @param dato
-	 */
-	void remove(T dato);
+	boolean contains(T dato, ConjuntoNumerable<T> A);
 	
 	/**
 	 * 
 	 * @param dato
 	 * @return
 	 */
-	boolean Equals(ConjuntoNumerable<T> dato);
+	boolean contains(T dato);
+
+	/**
+	 * 
+	 * @param A
+	 */
+	void clear(ConjuntoNumerable<T> A);
+
+	/**
+	 * 
+	 * @param dato
+	 * @param A
+	 */
+	void add(T dato, ConjuntoNumerable<T> A);
+
+	/**
+	 * 
+	 * @param dato
+	 * @param A
+	 */
+	void remove(T dato, ConjuntoNumerable<T> A);
+
+	/**
+	 * 
+	 * @param A
+	 * @return
+	 */
+	boolean Equals(ConjuntoNumerable<T> A);
 }

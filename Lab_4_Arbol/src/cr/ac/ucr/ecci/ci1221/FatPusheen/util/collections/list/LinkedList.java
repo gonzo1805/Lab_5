@@ -266,7 +266,7 @@ public class LinkedList<E> implements List<E> {
 	 */
 	@Override
 	public Iterator<E> iterator() {
-		return new B();
+		return new B<E>();
 	}
 
 	/**
