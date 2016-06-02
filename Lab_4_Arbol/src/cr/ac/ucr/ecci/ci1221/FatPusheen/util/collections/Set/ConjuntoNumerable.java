@@ -1,6 +1,8 @@
 package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Set;
 
-public interface ConjuntoNumerable<T extends Enumerable> {
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
+
+public interface ConjuntoNumerable<T extends Enumerable<T>> {
 
 	/**
 	 * 
@@ -9,7 +11,7 @@ public interface ConjuntoNumerable<T extends Enumerable> {
 	 * @param C
 	 * @return
 	 */
-	ConjuntoNumerable<T> union(BitsVectorSetImpl<T> A, BitsVectorSetImpl<T> B, BitsVectorSetImpl<T> C);
+	ConjuntoNumerable<T> union(ConjuntoNumerable<T> A, ConjuntoNumerable<T> B);
 
 	/**
 	 * 
@@ -18,7 +20,7 @@ public interface ConjuntoNumerable<T extends Enumerable> {
 	 * @param C
 	 * @return
 	 */
-	ConjuntoNumerable<T> intersection(ConjuntoNumerable<T> A, ConjuntoNumerable<T> B, ConjuntoNumerable<T> C);
+	ConjuntoNumerable<T> intersection(ConjuntoNumerable<T> A, ConjuntoNumerable<T> B);
 
 	/**
 	 * 
@@ -27,19 +29,12 @@ public interface ConjuntoNumerable<T extends Enumerable> {
 	 * @param C
 	 * @return
 	 */
-	ConjuntoNumerable<T> difference(ConjuntoNumerable<T> A, ConjuntoNumerable<T> B, ConjuntoNumerable<T> C);
+	ConjuntoNumerable<T> difference(ConjuntoNumerable<T> A, ConjuntoNumerable<T> B);
 
 	/**
 	 * 
 	 * @param dato
 	 * @param A
-	 * @return
-	 */
-	boolean contains(T dato, ConjuntoNumerable<T> A);
-	
-	/**
-	 * 
-	 * @param dato
 	 * @return
 	 */
 	boolean contains(T dato);
@@ -48,21 +43,21 @@ public interface ConjuntoNumerable<T extends Enumerable> {
 	 * 
 	 * @param A
 	 */
-	void clear(ConjuntoNumerable<T> A);
+	void clear();
 
 	/**
 	 * 
 	 * @param dato
 	 * @param A
 	 */
-	void add(T dato, ConjuntoNumerable<T> A);
+	void add(T dato);
 
 	/**
 	 * 
 	 * @param dato
 	 * @param A
 	 */
-	void remove(T dato, ConjuntoNumerable<T> A);
+	void remove(T dato);
 
 	/**
 	 * 
@@ -70,4 +65,8 @@ public interface ConjuntoNumerable<T extends Enumerable> {
 	 * @return
 	 */
 	boolean Equals(ConjuntoNumerable<T> A);
+	
+	boolean isEmpty();
+
+	Iterator<Boolean> iterador();
 }

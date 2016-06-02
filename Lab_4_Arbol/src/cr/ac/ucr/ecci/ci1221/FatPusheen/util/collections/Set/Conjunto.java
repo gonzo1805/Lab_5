@@ -1,5 +1,7 @@
 package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Set;
 
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
+
 public interface Conjunto<T> {
 
 	/**
@@ -64,5 +66,8 @@ public interface Conjunto<T> {
 	 */
 	boolean Equals(Conjunto<T> A);
 
-	
+	boolean isEmpty();
+
+	Iterator<T> iterador();
+
 }
