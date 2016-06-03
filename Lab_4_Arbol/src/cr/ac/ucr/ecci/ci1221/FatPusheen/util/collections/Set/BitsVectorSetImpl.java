@@ -1,9 +1,5 @@
 package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Set;
 
-import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
-import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.ArrayList;
-import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.List;
-
 public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumerable<T> {
 
 	T[] lista;
@@ -27,44 +23,89 @@ public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumer
 			return A;
 		}
 		ConjuntoNumerable<T> resultado = new BitsVectorSetImpl<T>();
-		Iterator<Boolean> itA = A.iterador();
-		Iterator<Boolean> itB = B.iterador();
-		while (itA.hasNext()) {
-			resultado.add(itA.next());
+		int i = 0;
+		while (A.posicion(i) != null) {
+			resultado.add(A.posicion(i));
+			i++;
 		}
-		while (itB.hasNext()) {
-			T dato = itB.next();
-			if (B.contains(dato) == false) {
-				resultado.add(dato);
+
+		i = 0;
+
+		while (B.posicion(i) != null) {
+			if (resultado.contains(B.posicion(i)) == false) {
+				resultado.add(B.posicion(i));
 			}
+			i++;
 		}
 		return resultado;
 	}
 
 	@Override
 	public ConjuntoNumerable<T> intersection(ConjuntoNumerable<T> A, ConjuntoNumerable<T> B) {
-		// TODO Auto-generated method stub
-		return null;
+		if (A.isEmpty() == true && B.isEmpty() == true) {
+			ArrayIndexOutOfBoundsException f = new ArrayIndexOutOfBoundsException("Ambas listas estan vacias");
+			throw f;
+		} else if (A.isEmpty() == true) {
+			return B;
+		} else if (B.isEmpty() == true) {
+			return A;
+		}
+		ConjuntoNumerable<T> resultado = new BitsVectorSetImpl<T>();
+
+		int i = 0;
+		while (A.posicion(i) != null) {
+			resultado.add(A.posicion(i));
+			i++;
+		}
+
+		i = 0;
+
+		while (resultado.posicion(i) != null) {
+			if (B.contains(resultado.posicion(i)) == false) {
+				resultado.remove(resultado.posicion(i));
+			}
+			i++;
+		}
+		return resultado;
 	}
 
 	@Override
 	public ConjuntoNumerable<T> difference(ConjuntoNumerable<T> A, ConjuntoNumerable<T> B) {
-		// TODO Auto-generated method stub
-		return null;
+		if (A.isEmpty() == true && B.isEmpty() == true) {
+			ArrayIndexOutOfBoundsException f = new ArrayIndexOutOfBoundsException("Ambas listas estan vacias");
+			throw f;
+		} else if (A.isEmpty() == true) {
+			return B;
+		} else if (B.isEmpty() == true) {
+			return A;
+		}
+		ConjuntoNumerable<T> resultado = new BitsVectorSetImpl<T>();
+
+		int i = 0;
+		while (A.posicion(i) != null) {
+			resultado.add(A.posicion(i));
+			i++;
+		}
+
+		i = 0;
+
+		while (B.posicion(i) != null) {
+			if (resultado.contains(B.posicion(i))) {
+				resultado.remove(B.posicion(i));
+			}
+			i++;
+		}
+		return resultado;
 	}
 
 	@Override
 	public boolean contains(T dato) {
-		int posicion = dato.getIndex();
-		if (this.lista[posicion] == null) {
-			return false;
-		}
-		return true;
+		return (this.lista[dato.getIndex()] != null);
 	}
 
 	@Override
 	public void clear() {
-		for (int i=0; i<this.lista.length; i++){
+		for (int i = 0; i < this.lista.length; i++) {
 			this.lista[i] = null;
 		}
 	}
@@ -81,7 +122,21 @@ public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumer
 
 	@Override
 	public boolean Equals(ConjuntoNumerable<T> A) {
-		return false;
+		int i = 0;
+		while (this.posicion(i) != null) {
+			if (A.contains(this.posicion(i)) == false){
+				return false;
+			}
+		}
+		
+		i = 0;
+		
+		while (A.posicion(i) != null) {
+			if (this.contains(A.posicion(i)) == false){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -90,9 +145,8 @@ public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumer
 	}
 
 	@Override
-	public Iterator<Boolean> iterador() {
-		// TODO Auto-generated method stub
-		return null;
+	public T posicion(int posicion) {
+		return this.lista[posicion];
 	}
 
 }

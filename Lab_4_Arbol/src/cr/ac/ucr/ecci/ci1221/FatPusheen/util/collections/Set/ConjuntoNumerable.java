@@ -68,5 +68,5 @@ public interface ConjuntoNumerable<T extends Enumerable<T>> {
 	
 	boolean isEmpty();
 
-	Iterator<Boolean> iterador();
+	T posicion(int posicion);
 }
