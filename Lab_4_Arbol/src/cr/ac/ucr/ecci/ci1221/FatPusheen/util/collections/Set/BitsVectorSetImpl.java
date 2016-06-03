@@ -6,16 +6,16 @@ import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.List;
 
 public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumerable<T> {
 
-	List<Boolean> lista;
-	
-	public BitsVectorSetImpl(){
-		lista = new ArrayList<Boolean>();
+	T[] lista;
+
+	public BitsVectorSetImpl() {
+		lista = (T[]) new Object[1000];
 	}
-	
-	public BitsVectorSetImpl(int tamano){
-		lista = new ArrayList<Boolean>(tamano);
+
+	public BitsVectorSetImpl(int tamano) {
+		lista = (T[]) new Object[tamano];
 	}
-	
+
 	@Override
 	public ConjuntoNumerable<T> union(ConjuntoNumerable<T> A, ConjuntoNumerable<T> B) {
 		if (A.isEmpty() == true && B.isEmpty() == true) {
@@ -56,47 +56,43 @@ public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumer
 	@Override
 	public boolean contains(T dato) {
 		int posicion = dato.getIndex();
-		if (this.lista.get(posicion)){
-			return true;
+		if (this.lista[posicion] == null) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
 	public void clear() {
-		
-		
+		for (int i=0; i<this.lista.length; i++){
+			this.lista[i] = null;
+		}
 	}
 
 	@Override
 	public void add(T dato) {
-		// TODO Auto-generated method stub
-		
+		this.lista[dato.getIndex()] = dato;
 	}
 
 	@Override
 	public void remove(T dato) {
-		// TODO Auto-generated method stub
-		
+		this.lista[dato.getIndex()] = null;
 	}
 
 	@Override
 	public boolean Equals(ConjuntoNumerable<T> A) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return (this.lista.length == 0);
 	}
 
 	@Override
 	public Iterator<Boolean> iterador() {
-		Iterator<Boolean> it = this.lista.iterator();
-		return it;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	
 }
