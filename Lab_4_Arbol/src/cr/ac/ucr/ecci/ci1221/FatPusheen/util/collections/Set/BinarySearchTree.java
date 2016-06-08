@@ -58,11 +58,7 @@ public class BinarySearchTree<T> implements Conjunto<T> {
 		return false;
 	}
 
-	@Override
-	public Iterator<T> iterador() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	private class Nodo<T> {
 
@@ -99,5 +95,11 @@ public class BinarySearchTree<T> implements Conjunto<T> {
 		public void setHijoIzquierdo(Nodo<T> hijo) {
 			this.hijoIzquierdo = hijo;
 		}
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -59,10 +59,12 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 	}
 
 	@Override
-	public Iterator<T> iterador() {
+	public Iterator<T> iterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 	
 

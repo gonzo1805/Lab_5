@@ -23,8 +23,8 @@ public class LinkedListSetImpl<T> implements Conjunto<T> {
 			return A;
 		}
 		Conjunto<T> resultado = new LinkedListSetImpl<T>();
-		Iterator<T> itA = A.iterador();
-		Iterator<T> itB = B.iterador();
+		Iterator<T> itA = A.iterator();
+		Iterator<T> itB = B.iterator();
 		while (itA.hasNext()) {
 			resultado.add(itA.next());
 		}
@@ -48,7 +48,7 @@ public class LinkedListSetImpl<T> implements Conjunto<T> {
 			return A;
 		}
 		Conjunto<T> resultado = new LinkedListSetImpl<T>();
-		Iterator<T> itA = A.iterador();
+		Iterator<T> itA = A.iterator();
 
 		T datoA;
 
@@ -73,8 +73,8 @@ public class LinkedListSetImpl<T> implements Conjunto<T> {
 		}
 		Conjunto<T> resultado = new LinkedListSetImpl<T>();
 
-		Iterator<T> itA = A.iterador();
-		Iterator<T> itB = B.iterador();
+		Iterator<T> itA = A.iterator();
+		Iterator<T> itB = B.iterator();
 
 		while (itA.hasNext()) {
 			resultado.add(itA.next());
@@ -131,8 +131,8 @@ public class LinkedListSetImpl<T> implements Conjunto<T> {
 
 	@Override
 	public boolean Equals(Conjunto<T> A) {
-		Iterator<T> itThis = this.iterador();
-		Iterator<T> itA = this.iterador();
+		Iterator<T> itThis = this.iterator();
+		Iterator<T> itA = this.iterator();
 
 		while (itThis.hasNext()) {
 			if (A.contains(itThis.next()) == false) {
@@ -147,9 +147,13 @@ public class LinkedListSetImpl<T> implements Conjunto<T> {
 		return true;
 	}
 
-	public Iterator<T> iterador() {
+	@Override
+	public Iterator<T> iterator() {
 		Iterator<T> it = this.lista.iterator();
 		return it;
 	}
+
+	
+	
 
 }
