@@ -2,7 +2,17 @@ package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Set;
 
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
 
-public class BinarySearchTree<T> implements Conjunto<T> {
+public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
+
+	Nodo<T> raiz;
+
+	public BinarySearchTree() {
+		this.raiz = null;
+	}
+
+	public BinarySearchTree(Nodo<T> raiz) {
+		this.raiz = new Nodo(raiz);
+	}
 
 	@Override
 	public Conjunto<T> union(Conjunto<T> A, Conjunto<T> B) {
@@ -36,8 +46,21 @@ public class BinarySearchTree<T> implements Conjunto<T> {
 
 	@Override
 	public void add(T dato) {
-		// TODO Auto-generated method stub
+		if (raiz == null) {
+			this.raiz = new Nodo(dato);
+		} else {
 
+		}
+
+	}
+
+	private void inserteOrdenado(Nodo<T> este, Nodo<T> dato) {
+		if (este.dato.compareTo(dato.dato) < 0 && este.hijoDerecho == null){
+			este.setHijoDerecho(dato);
+		}
+		if (este.dato.compareTo(dato.dato) < 0){
+			inserteOrdenado(este.hijoDerecho, dato);
+		}
 	}
 
 	@Override
@@ -57,8 +80,6 @@ public class BinarySearchTree<T> implements Conjunto<T> {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	
 
 	private class Nodo<T> {
 
@@ -102,4 +123,6 @@ public class BinarySearchTree<T> implements Conjunto<T> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 }
