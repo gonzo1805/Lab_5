@@ -4,9 +4,19 @@ import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
 
 public class HashTableSetImpl<T> implements Conjunto<T> {
 
+	T[] lista;
+	
+	public HashTableSetImpl(){
+		lista = (T[]) new Object[1000];
+	}
+	
+	public HashTableSetImpl(int tamano){
+		lista = (T[]) new Object[tamano];
+	}
+	
 	@Override
 	public Conjunto<T> union(Conjunto<T> A, Conjunto<T> B) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -60,9 +70,10 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 	
 

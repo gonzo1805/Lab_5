@@ -10,4 +10,10 @@ public class Estudiante implements Enumerable {
 	public int getIndex() {
 		return this.posicion;
 	}
+	
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return super.hashCode();
+	}
 }

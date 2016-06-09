@@ -7,7 +7,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 	Nodo<T> raiz;
 
 	public BinarySearchTree() {
-		this.raiz = null;
+		this.raiz = new Nodo(null);
 	}
 
 	public BinarySearchTree(Nodo<T> raiz) {
@@ -34,32 +34,46 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 
 	@Override
 	public boolean contains(T dato) {
-		// TODO Auto-generated method stub
+		return contains(raiz, dato);
+	}
+
+	private boolean contains(Nodo<T> nodo, T dato) {
+		if (nodo.dato.equals(dato)) {
+			return true;
+		} else {
+			if (nodo.hijoIzquierdo != null) {
+				contains(nodo.hijoIzquierdo, dato);
+			} else if (nodo.hijoDerecho != null) {
+				contains(nodo.hijoDerecho, dato);
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-
+		raiz = null;
 	}
 
 	@Override
 	public void add(T dato) {
 		if (raiz == null) {
-			this.raiz = new Nodo(dato);
+			this.raiz = new Nodo<T>(dato);
 		} else {
-
+			inserteOrdenado(raiz, new Nodo<T>(dato));
 		}
-
 	}
 
 	private void inserteOrdenado(Nodo<T> este, Nodo<T> dato) {
-		if (este.dato.compareTo(dato.dato) < 0 && este.hijoDerecho == null){
-			este.setHijoDerecho(dato);
-		}
-		if (este.dato.compareTo(dato.dato) < 0){
-			inserteOrdenado(este.hijoDerecho, dato);
+		if (este == null) {
+			este = dato;
+		} else {
+			if (este.dato.compareTo(dato.dato) < 0) {
+				inserteOrdenado(este.hijoDerecho, dato);
+			}
+			if (este.dato.compareTo(dato.dato) >= 0) {
+				inserteOrdenado(este.hijoIzquierdo, dato);
+			}
 		}
 	}
 
@@ -77,8 +91,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return raiz == null;
 	}
 
 	private class Nodo<T> {
@@ -124,5 +137,11 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 		return null;
 	}
 
-	
+	/*private class Iterator<T>{
+		
+		public Iterator(){
+			
+		}
+	}*/
+
 }

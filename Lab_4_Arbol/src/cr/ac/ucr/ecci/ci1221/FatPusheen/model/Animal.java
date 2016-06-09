@@ -7,5 +7,11 @@ public class Animal implements Comparable<Object> {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return super.hashCode();
+	}
 
 }
