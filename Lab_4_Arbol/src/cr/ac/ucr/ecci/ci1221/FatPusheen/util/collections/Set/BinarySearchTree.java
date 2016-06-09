@@ -7,7 +7,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 	Nodo<T> raiz;
 
 	public BinarySearchTree() {
-		this.raiz = new Nodo(null);
+		this.raiz = new Nodo<T>(null);
 	}
 
 	public BinarySearchTree(Nodo<T> raiz) {
@@ -133,8 +133,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.iterator();
 	}
 
 	/*private class Iterator<T>{

@@ -1,5 +1,7 @@
 package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Set;
 
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
+
 public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumerable<T> {
 
 	T[] lista;
