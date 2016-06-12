@@ -25,19 +25,18 @@ public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumer
 			return A;
 		}
 		ConjuntoNumerable<T> resultado = new BitsVectorSetImpl<T>();
-		int i = 0;
-		while (A.posicion(i) != null) {
-			resultado.add(A.posicion(i));
-			i++;
+
+		Iterator<T> itA = A.iterator();
+		Iterator<T> itB = B.iterator();
+
+		while (itA.hasNext()) {
+			resultado.add(itA.next());
 		}
-
-		i = 0;
-
-		while (B.posicion(i) != null) {
-			if (resultado.contains(B.posicion(i)) == false) {
-				resultado.add(B.posicion(i));
+		while (itB.hasNext()) {
+			T insercion = itB.next();
+			if (!A.contains(insercion)) {
+				resultado.add(insercion);
 			}
-			i++;
 		}
 		return resultado;
 	}
@@ -54,19 +53,13 @@ public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumer
 		}
 		ConjuntoNumerable<T> resultado = new BitsVectorSetImpl<T>();
 
-		int i = 0;
-		while (A.posicion(i) != null) {
-			resultado.add(A.posicion(i));
-			i++;
-		}
+		Iterator<T> itB = B.iterator();
 
-		i = 0;
-
-		while (resultado.posicion(i) != null) {
-			if (B.contains(resultado.posicion(i)) == false) {
-				resultado.remove(resultado.posicion(i));
+		while (itB.hasNext()) {
+			T dato = itB.next();
+			if (A.contains(dato)) {
+				resultado.add(dato);
 			}
-			i++;
 		}
 		return resultado;
 	}
@@ -83,20 +76,15 @@ public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumer
 		}
 		ConjuntoNumerable<T> resultado = new BitsVectorSetImpl<T>();
 
-		int i = 0;
-		while (A.posicion(i) != null) {
-			resultado.add(A.posicion(i));
-			i++;
-		}
+		Iterator<T> itA = A.iterator();
 
-		i = 0;
-
-		while (B.posicion(i) != null) {
-			if (resultado.contains(B.posicion(i))) {
-				resultado.remove(B.posicion(i));
+		while (itA.hasNext()) {
+			T dato = itA.next();
+			if (!B.contains(dato)) {
+				resultado.add(dato);
 			}
-			i++;
 		}
+
 		return resultado;
 	}
 
@@ -114,6 +102,18 @@ public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumer
 
 	@Override
 	public void add(T dato) {
+		if (this.lista.length < dato.getIndex()) {
+			T[] listaNueva = (T[]) new Object[dato.getIndex() + 1];
+			Iterator<T> it = this.iterator();
+
+			T data;
+
+			while (it.hasNext()) {
+				data = it.next();
+				listaNueva[data.getIndex()] = data;
+			}
+			lista = listaNueva;
+		}
 		this.lista[dato.getIndex()] = dato;
 	}
 
@@ -124,17 +124,16 @@ public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumer
 
 	@Override
 	public boolean Equals(ConjuntoNumerable<T> A) {
-		int i = 0;
-		while (this.posicion(i) != null) {
-			if (A.contains(this.posicion(i)) == false){
+		Iterator<T> itA = A.iterator();
+		Iterator<T> itThis = this.iterator();
+
+		while (itA.hasNext()) {
+			if (!this.contains(itA.next())) {
 				return false;
 			}
 		}
-		
-		i = 0;
-		
-		while (A.posicion(i) != null) {
-			if (this.contains(A.posicion(i)) == false){
+		while (itThis.hasNext()) {
+			if (!A.contains(itThis.next())) {
 				return false;
 			}
 		}
@@ -143,12 +142,46 @@ public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumer
 
 	@Override
 	public boolean isEmpty() {
-		return (this.lista.length == 0);
+		Iterator<T> itThis = this.iterator();
+		return (itThis.next() == null);
 	}
 
 	@Override
-	public T posicion(int posicion) {
-		return this.lista[posicion];
+	public Iterator<T> iterator() {
+		return new It<T>();
+	}
+
+	private class It<E> implements Iterator<E> {
+		int actualIterador = 0;
+		int tamano = lista.length;
+		int siguienteDato = actualIterador;
+
+		public It() {
+		}
+
+		@Override
+		public boolean hasNext() {
+			for (int i = actualIterador; i < tamano; i++) {
+				if (lista[i] != null) {
+					siguienteDato = i;
+					return true;
+				}
+			}
+			return false;
+		}
+
+		@Override
+		public E next() {
+			if (actualIterador >= tamano) {
+				System.out.println("Ya esta en el final de la lista");
+				return null;
+			} else {
+				E retorno = (E) lista[siguienteDato];
+				actualIterador = siguienteDato;
+				return retorno;
+			}
+
+		}
 	}
 
 }

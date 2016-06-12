@@ -131,16 +131,53 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 		}
 	}
 
-	@Override
-	public Iterator<T> iterator() {
-		return this.iterator();
+	private class It<E> implements Iterator<E> {
+
+		Nodo<T> iterador = raiz;
+
+		public It() {
+		}
+
+		@Override
+		public boolean hasNext() {
+			if (iterador == raiz) {
+				return true;
+			}
+			else if (iterador.hijoIzquierdo != null){
+				return true;
+			}
+			else if (iterador.hijoDerecho != null){
+				return true;
+			}
+			return false;
+		}
+
+		@Override
+		public E next() {
+			if (iterador == raiz) {
+				E dato = (E) iterador.dato;
+				if (iterador.hijoIzquierdo != null){
+					iterador = iterador.hijoIzquierdo;
+				}
+				else if (iterador.hijoDerecho != null){
+					iterador = iterador.hijoDerecho;
+				}
+				else 
+				return dato;
+			}
+			else if (iterador.hijoIzquierdo != null){
+				return (E) iterador.getHijoIzquierdo();
+			}
+			else if (iterador.hijoDerecho != null){
+				return (E) iterador.getHijoDerecho();
+			}
+			return null;
+		}
 	}
 
-	/*private class Iterator<T>{
-		
-		public Iterator(){
-			
-		}
-	}*/
+	@Override
+	public Iterator<T> iterator() {
+		return new It();
+	}
 
 }

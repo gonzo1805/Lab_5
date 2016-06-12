@@ -2,7 +2,7 @@ package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Set;
 
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterable;
 
-public interface ConjuntoNumerable<T extends Enumerable<T>> {
+public interface ConjuntoNumerable<T extends Enumerable<T>> extends Iterable<T> {
 
 	/**
 	 * 
@@ -68,5 +68,5 @@ public interface ConjuntoNumerable<T extends Enumerable<T>> {
 	
 	boolean isEmpty();
 
-	T posicion(int posicion);
+	
 }
