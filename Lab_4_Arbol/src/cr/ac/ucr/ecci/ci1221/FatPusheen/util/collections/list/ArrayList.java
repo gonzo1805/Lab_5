@@ -14,7 +14,7 @@ public class ArrayList<E> implements List<E> {
 	private E[] lista;
 
 	public ArrayList() {
-		lista = (E[]) new Object[100];
+		lista = (E[]) new Object[1000];
 		cantidadDatos = 0;
 	}
 	
@@ -38,7 +38,7 @@ public class ArrayList<E> implements List<E> {
 		}
 		if (cantidadDatos + 1 >= lista.length) {
 
-			aumentaTamaño();
+			this.aumentaTamaño();
 			E aux = lista[position - 1];
 			for (int i = position - 1; i < cantidadDatos; i++) {
 				lista[i + 1] = aux;

@@ -66,6 +66,10 @@ public interface ConjuntoNumerable<T extends Enumerable<T>> extends Iterable<T> 
 	 */
 	boolean Equals(ConjuntoNumerable<T> A);
 	
+	/**
+	 * 
+	 * @return
+	 */
 	boolean isEmpty();
 
 	

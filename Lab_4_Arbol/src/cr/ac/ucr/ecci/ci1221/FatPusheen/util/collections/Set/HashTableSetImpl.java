@@ -16,6 +16,16 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 		lista = (ArrayList<T>[]) new Object[tamano];
 	}
 
+	private void auxiliarUnion(int hash, Conjunto<T> con) {
+		Iterator<T> itThis = this.lista[hash].iterator();
+		while (itThis.hasNext()) {
+			T dato = itThis.next();
+			if (!con.contains(dato)) {
+				con.add(dato);
+			}
+		}
+	}
+
 	@Override
 	public Conjunto<T> union(Conjunto<T> A, Conjunto<T> B) {
 		if (A.isEmpty() == true && B.isEmpty() == true) {
@@ -36,12 +46,20 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 			resultado.add(itA.next());
 		}
 		while (itB.hasNext()) {
-			T insercion = itB.next();
-			if (!A.contains(insercion)) {
-				resultado.add(insercion);
-			}
+			T dato = itB.next();
+			auxiliarUnion(dato.hashCode(), resultado);
 		}
 		return resultado;
+	}
+
+	private void auxiliarInsterction(int hash, Conjunto<T> con, Conjunto<T> resultado) {
+		Iterator<T> itThis = this.lista[hash].iterator();
+		while (itThis.hasNext()) {
+			T dato = itThis.next();
+			if (con.contains(dato)) {
+				resultado.add(dato);
+			}
+		}
 	}
 
 	@Override
@@ -60,11 +78,19 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 
 		while (itB.hasNext()) {
 			T dato = itB.next();
-			if (A.contains(dato)) {
+			auxiliarInsterction(dato.hashCode(), A, resultado);
+		}
+		return resultado;
+	}
+
+	private void auxiliarDifference(int hash, Conjunto<T> con, Conjunto<T> resultado) {
+		Iterator<T> itThis = this.lista[hash].iterator();
+		while (itThis.hasNext()) {
+			T dato = itThis.next();
+			if (!con.contains(dato)) {
 				resultado.add(dato);
 			}
 		}
-		return resultado;
 	}
 
 	@Override
@@ -83,9 +109,7 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 
 		while (itA.hasNext()) {
 			T dato = itA.next();
-			if (!B.contains(dato)) {
-				resultado.add(dato);
-			}
+			auxiliarDifference(dato.hashCode(), B, resultado);
 		}
 
 		return resultado;
@@ -108,25 +132,28 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 
 	@Override
 	public void clear() {
-		this.lista = null;
+		lista = (ArrayList<T>[]) new Object[lista.length];
 	}
 
 	@Override
 	public void add(T dato) {
-		if (this.lista.length < dato.hashCode()) {
-			List<T>[] listaNueva = (ArrayList<T>[]) new Object[dato.hashCode() + 1];
+		if (this.contains(dato)) {
+			System.out.println("El elemento ya esta en el conjunto, no se insertara");
+		} else {
+			if (this.lista.length <= dato.hashCode()) {
+				List<T>[] listaNueva = (ArrayList<T>[]) new Object[dato.hashCode() + 1];
 
-			Iterator<T> itThis = this.iterator();
+				Iterator<T> itThis = this.iterator();
 
-			while (itThis.hasNext()) {
-				T datoIt = itThis.next();
-				listaNueva[datoIt.hashCode()].add(datoIt);
+				while (itThis.hasNext()) {
+					T datoIt = itThis.next();
+					listaNueva[datoIt.hashCode()] = this.lista[datoIt.hashCode()];
+				}
+
+				this.lista = listaNueva;
 			}
-
-			lista = listaNueva;
+			this.lista[dato.hashCode()].add(dato);
 		}
-		this.lista[dato.hashCode()].add(dato);
-
 	}
 
 	@Override
@@ -134,23 +161,41 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 		this.lista[dato.hashCode()].remove(dato);
 	}
 
+	private boolean auxiliarEquals(int hash, Conjunto<T> con) {
+		Iterator<T> itThis = this.lista[hash].iterator();
+		while (itThis.hasNext()) {
+			T dato = itThis.next();
+			if (!con.contains(dato)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	@Override
 	public boolean Equals(Conjunto<T> A) {
 		Iterator<T> itA = A.iterator();
 		Iterator<T> itThis = this.iterator();
-		
-		while(itA.hasNext()){
+
+		while (itA.hasNext()) {
 			T dato = itA.next();
-			Iterator<T> itDato;
+			if (!auxiliarEquals(dato.hashCode(), this)) {
+				return false;
+			}
 		}
-		
-		return false;
+		while (itThis.hasNext()) {
+			T dato = itThis.next();
+			if (!auxiliarEquals(dato.hashCode(), A)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public boolean isEmpty() {
 		Iterator<T> itThis = this.iterator();
-		return (itThis.next() == null);
+		return (!itThis.hasNext());
 	}
 
 	@Override
@@ -160,7 +205,6 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 
 	private class It<E> implements Iterator<E> {
 		int actualIterador = 0;
-		int tamano = lista.length;
 		int siguienteDato = actualIterador;
 
 		public It() {
@@ -168,7 +212,7 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 
 		@Override
 		public boolean hasNext() {
-			for (int i = actualIterador; i < tamano; i++) {
+			for (int i = actualIterador; i < lista.length; i++) {
 				if (lista[i] != null) {
 					siguienteDato = i;
 					return true;
@@ -179,15 +223,14 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 
 		@Override
 		public E next() {
-			if (actualIterador >= tamano) {
+			if (actualIterador >= lista.length) {
 				System.out.println("Ya esta en el final de la lista");
 				return null;
 			} else {
 				actualIterador = siguienteDato;
 				return (E) lista[siguienteDato];
 			}
-
 		}
-
 	}
+	
 }

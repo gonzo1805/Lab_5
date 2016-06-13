@@ -1,14 +1,12 @@
 package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Set;
 
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.stack.Stack;
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.stack.StackArray;
 
 public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 
 	Nodo<T> raiz;
-
-	public BinarySearchTree() {
-		this.raiz = new Nodo<T>(null);
-	}
 
 	public BinarySearchTree(Nodo<T> raiz) {
 		this.raiz = new Nodo(raiz);
@@ -16,20 +14,85 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 
 	@Override
 	public Conjunto<T> union(Conjunto<T> A, Conjunto<T> B) {
-		// TODO Auto-generated method stub
-		return null;
+		if (A.isEmpty() == true && B.isEmpty() == true) {
+			ArrayIndexOutOfBoundsException f = new ArrayIndexOutOfBoundsException("Ambas listas estan vacias");
+			throw f;
+		} else if (A.isEmpty() == true) {
+			return B;
+		} else if (B.isEmpty() == true) {
+			return A;
+		}
+
+		Iterator<T> itA = A.iterator();
+		Conjunto<T> resultado = new BinarySearchTree<T>(new Nodo<T>(itA.next()));
+
+		while (itA.hasNext()) {
+			resultado.add(itA.next());
+		}
+
+		Iterator<T> itB = B.iterator();
+
+		while (itB.hasNext()) {
+			T dato = itB.next();
+			if (!resultado.contains(dato)) {
+				resultado.add(dato);
+			}
+		}
+		return resultado;
 	}
 
 	@Override
 	public Conjunto<T> intersection(Conjunto<T> A, Conjunto<T> B) {
-		// TODO Auto-generated method stub
-		return null;
+		if (A.isEmpty() == true && B.isEmpty() == true) {
+			ArrayIndexOutOfBoundsException f = new ArrayIndexOutOfBoundsException("Ambas listas estan vacias");
+			throw f;
+		} else if (A.isEmpty() == true) {
+			return B;
+		} else if (B.isEmpty() == true) {
+			return A;
+		}
+		Iterator<T> itA = A.iterator();
+		Conjunto<T> resultado = new BinarySearchTree<T>(new Nodo<T>(itA.next()));
+
+		while (itA.hasNext()) {
+			resultado.add(itA.next());
+		}
+		Iterator<T> itB = B.iterator();
+
+		while (itB.hasNext()) {
+			T dato = itB.next();
+			if (!A.contains(dato)) {
+				resultado.remove(dato);
+			}
+		}
+		return resultado;
 	}
 
 	@Override
 	public Conjunto<T> difference(Conjunto<T> A, Conjunto<T> B) {
-		// TODO Auto-generated method stub
-		return null;
+		if (A.isEmpty() == true && B.isEmpty() == true) {
+			ArrayIndexOutOfBoundsException f = new ArrayIndexOutOfBoundsException("Ambas listas estan vacias");
+			throw f;
+		} else if (A.isEmpty() == true) {
+			return B;
+		} else if (B.isEmpty() == true) {
+			return A;
+		}
+		Iterator<T> itA = A.iterator();
+		Conjunto<T> resultado = new BinarySearchTree<T>(new Nodo<T>(itA.next()));
+
+		while (itA.hasNext()) {
+			resultado.add(itA.next());
+		}
+		Iterator<T> itB = B.iterator();
+
+		while (itB.hasNext()) {
+			T dato = itB.next();
+			if (!A.contains(dato)) {
+				resultado.remove(dato);
+			}
+		}
+		return resultado;
 	}
 
 	@Override
@@ -42,9 +105,9 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 			return true;
 		} else {
 			if (nodo.hijoIzquierdo != null) {
-				contains(nodo.hijoIzquierdo, dato);
+				return contains(nodo.hijoIzquierdo, dato);
 			} else if (nodo.hijoDerecho != null) {
-				contains(nodo.hijoDerecho, dato);
+				return contains(nodo.hijoDerecho, dato);
 			}
 		}
 		return false;
@@ -57,36 +120,103 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 
 	@Override
 	public void add(T dato) {
+		if (this.contains(dato)) {
+			System.out.println("El elemento ya esta en el arbol, no se insertara");
+			return;
+		}
 		if (raiz == null) {
 			this.raiz = new Nodo<T>(dato);
 		} else {
-			inserteOrdenado(raiz, new Nodo<T>(dato));
+			inserteOrdenado(raiz, new Nodo<T>(dato), false);
 		}
 	}
 
-	private void inserteOrdenado(Nodo<T> este, Nodo<T> dato) {
-		if (este == null) {
-			este = dato;
+	private void inserteOrdenado(Nodo<T> este, Nodo<T> dato, boolean insercion) {
+		if (insercion == true) {
+			return;
 		} else {
 			if (este.dato.compareTo(dato.dato) < 0) {
-				inserteOrdenado(este.hijoDerecho, dato);
+				if (este.hijoDerecho == null) {
+					este.hijoDerecho = dato;
+					insercion = true;
+				} else {
+					inserteOrdenado(este.hijoDerecho, dato, insercion);
+				}
 			}
 			if (este.dato.compareTo(dato.dato) >= 0) {
-				inserteOrdenado(este.hijoIzquierdo, dato);
+				if (este.hijoIzquierdo == null) {
+					este.hijoIzquierdo = dato;
+					insercion = true;
+				} else {
+					inserteOrdenado(este.hijoIzquierdo, dato, insercion);
+				}
 			}
 		}
 	}
 
 	@Override
 	public void remove(T dato) {
-		// TODO Auto-generated method stub
+		Nodo<T> nodo = null;
+		if (!this.contains(dato)) {
+			System.out.println("El elemento no esta en el conjunto");
+			return;
+		}
 
+		nodo = localizaNodo(dato, raiz, nodo);
+
+		if (nodo.hijoDerecho == null && nodo.hijoIzquierdo == null) {
+			nodo = null;
+
+		} else if (nodo.hijoDerecho == null && nodo.hijoIzquierdo != null) {
+			nodo = nodo.hijoIzquierdo;
+
+		} else if (nodo.hijoDerecho != null && nodo.hijoIzquierdo == null) {
+			nodo = nodo.hijoDerecho;
+
+		} else if (nodo.hijoDerecho != null && nodo.hijoIzquierdo != null) {
+			Nodo<T> camino = nodo.hijoDerecho;
+			Nodo<T> padre = nodo;
+			while (camino.hijoIzquierdo != null) {
+				padre = camino;
+				camino = camino.hijoIzquierdo;
+			}
+			nodo.setDato(camino.dato);
+			padre.setHijoIzquierdo(camino.hijoDerecho);
+		}
+
+	}
+
+	private Nodo<T> localizaNodo(T dato, Nodo<T> raiz, Nodo<T> nodo) {
+		if (raiz.dato.equals(dato)) {
+			nodo = raiz;
+			return nodo;
+		}
+		if (raiz.hijoIzquierdo != null) {
+			localizaNodo(dato, raiz.hijoIzquierdo, nodo);
+		}
+		if (raiz.hijoDerecho != null) {
+			localizaNodo(dato, raiz.hijoDerecho, nodo);
+		}
+		return nodo;
 	}
 
 	@Override
 	public boolean Equals(Conjunto<T> A) {
-		// TODO Auto-generated method stub
-		return false;
+		Iterator<T> itThis = this.iterator();
+		Iterator<T> itA = A.iterator();
+
+		while (itThis.hasNext()) {
+			if (!A.contains(itThis.next())) {
+				return false;
+			}
+		}
+
+		while (itA.hasNext()) {
+			if (!this.contains(itA.next())) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -133,51 +263,39 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 
 	private class It<E> implements Iterator<E> {
 
-		Nodo<T> iterador = raiz;
+		Stack<Nodo<T>> stack;
 
 		public It() {
+			stack = new StackArray<Nodo<T>>();
+			inserciones(raiz);
+		}
+
+		private void inserciones(Nodo<T> raiz) {
+			if (raiz.dato != null) {
+				stack.push(raiz);
+			}
+			if (raiz.hijoIzquierdo != null) {
+				inserciones(raiz.hijoIzquierdo);
+			}
+			if (raiz.hijoDerecho != null) {
+				inserciones(raiz.hijoDerecho);
+			}
 		}
 
 		@Override
 		public boolean hasNext() {
-			if (iterador == raiz) {
-				return true;
-			}
-			else if (iterador.hijoIzquierdo != null){
-				return true;
-			}
-			else if (iterador.hijoDerecho != null){
-				return true;
-			}
-			return false;
+			return (!stack.isEmpty());
 		}
 
 		@Override
 		public E next() {
-			if (iterador == raiz) {
-				E dato = (E) iterador.dato;
-				if (iterador.hijoIzquierdo != null){
-					iterador = iterador.hijoIzquierdo;
-				}
-				else if (iterador.hijoDerecho != null){
-					iterador = iterador.hijoDerecho;
-				}
-				else 
-				return dato;
-			}
-			else if (iterador.hijoIzquierdo != null){
-				return (E) iterador.getHijoIzquierdo();
-			}
-			else if (iterador.hijoDerecho != null){
-				return (E) iterador.getHijoDerecho();
-			}
-			return null;
+			return (E) stack.pop().dato;
 		}
 	}
 
 	@Override
 	public Iterator<T> iterator() {
-		return new It();
+		return new It<T>();
 	}
 
 }

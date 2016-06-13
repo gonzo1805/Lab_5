@@ -66,6 +66,10 @@ public interface Conjunto<T> extends Iterable<T> {
 	 */
 	boolean Equals(Conjunto<T> A);
 
+	/**
+	 * 
+	 * @return
+	 */
 	boolean isEmpty();
 
 
