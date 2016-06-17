@@ -1,4 +1,4 @@
-package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Set;
+package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.set;
 
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.ArrayList;
@@ -241,7 +241,7 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 				// grande que la lista
 				// en si
 				// Agranda la lista
-				List<T>[] listaNueva = (ArrayList<T>[]) new Object[dato.hashCode() + 1];
+				List<T>[] listaNueva = (ArrayList<T>[]) new Object[dato.hashCode() % lista.length + 1];
 
 				Iterator<T> itThis = this.iterator();// Iterador de this
 

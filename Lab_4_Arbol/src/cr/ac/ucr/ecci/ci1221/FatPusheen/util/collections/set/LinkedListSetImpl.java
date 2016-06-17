@@ -1,4 +1,4 @@
-package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Set;
+package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.set;
 
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.LinkedList;
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.List;

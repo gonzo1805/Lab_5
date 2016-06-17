@@ -1,9 +1,8 @@
 package cr.ac.ucr.ecci.ci1221.FatPusheen.model;
 
-import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Set.Enumerable;
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.set.Enumerable;
 
-
-public class Estudiante implements Enumerable, Comparable {
+public class Estudiante implements Enumerable<Object>, Comparable<Object> {
 
 	/**
 	 * Atributos: index: sera la posicion en la lista de clase carne: un string
@@ -66,8 +65,16 @@ public class Estudiante implements Enumerable, Comparable {
 	@Override
 	public int compareTo(Object comparacion) {
 		int primero = Integer.parseInt(this.carne);
-		int segundo = Integer.parseInt();
-		return 0;
+		int segundo = Integer.parseInt(((Estudiante) comparacion).carne);
+		int res = 0;
+		if (primero < segundo) {
+			res = -1;
+		} else if (primero == segundo) {
+			res = 0;
+		} else if (primero > segundo) {
+			res = 1;
+		}
+		return res;
 	}
 
 }

@@ -1,4 +1,4 @@
-package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Tree;
+package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.tree;
 
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.List;
 

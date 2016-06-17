@@ -1,9 +1,9 @@
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.LinkedList;
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.List;
-import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Tree.Tree;
-import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Tree.TreeImpl;
-import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Tree.Node;
-import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Tree.NodeImpl;
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.tree.Node;
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.tree.NodeImpl;
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.tree.Tree;
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.tree.TreeImpl;
 
 public class MainArbol {
 	public static void main(String args[]) {

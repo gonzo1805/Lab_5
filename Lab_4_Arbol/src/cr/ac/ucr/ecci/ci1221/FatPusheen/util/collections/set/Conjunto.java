@@ -1,8 +1,8 @@
-package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Set;
+package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.set;
 
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterable;
 
-public interface ConjuntoNumerable<T extends Enumerable<T>> extends Iterable<T> {
+public interface Conjunto<T> extends Iterable<T> {
 
 	/**
 	 * Une todos los datos no repetidos de los conjuntos A y B y lo retorna en
@@ -15,7 +15,7 @@ public interface ConjuntoNumerable<T extends Enumerable<T>> extends Iterable<T> 
 	 * @return el conjunto con la union de todos los datos no repetidos de los
 	 *         conjuntos A y B
 	 */
-	ConjuntoNumerable<T> union(ConjuntoNumerable<T> A, ConjuntoNumerable<T> B);
+	Conjunto<T> union(Conjunto<T> A, Conjunto<T> B);
 
 	/**
 	 * Interseca los datos de los conjuntos A y B y los retorna en un tercer
@@ -29,7 +29,7 @@ public interface ConjuntoNumerable<T extends Enumerable<T>> extends Iterable<T> 
 	 * @return el conjunto con la interseccion de los datos de los conjuntos A y
 	 *         B
 	 */
-	ConjuntoNumerable<T> intersection(ConjuntoNumerable<T> A, ConjuntoNumerable<T> B);
+	Conjunto<T> intersection(Conjunto<T> A, Conjunto<T> B);
 
 	/**
 	 * Hace una diferencia entre los datos del conjunto A a los del conjunto B y
@@ -42,7 +42,7 @@ public interface ConjuntoNumerable<T extends Enumerable<T>> extends Iterable<T> 
 	 *            elemento que "resta" en la diferencia
 	 * @return datos resultantes de la diferencia de A con B
 	 */
-	ConjuntoNumerable<T> difference(ConjuntoNumerable<T> A, ConjuntoNumerable<T> B);
+	Conjunto<T> difference(Conjunto<T> A, Conjunto<T> B);
 
 	/**
 	 * Retorna un boolean que dice si el elemento esta en el conjunto o no
@@ -83,8 +83,8 @@ public interface ConjuntoNumerable<T extends Enumerable<T>> extends Iterable<T> 
 	 * @return boolean que dice si el conjunto asignado al this es igual en
 	 *         todos sus elementos al conjunto A
 	 */
-	boolean Equals(ConjuntoNumerable<T> A);
-	
+	boolean Equals(Conjunto<T> A);
+
 	/**
 	 * Retorna un boolean si el conjunto asignado al this esta vacio
 	 * 
@@ -92,5 +92,4 @@ public interface ConjuntoNumerable<T extends Enumerable<T>> extends Iterable<T> 
 	 */
 	boolean isEmpty();
 
-	
 }
