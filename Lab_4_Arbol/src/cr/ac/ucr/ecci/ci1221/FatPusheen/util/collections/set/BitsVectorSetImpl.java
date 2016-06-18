@@ -2,7 +2,7 @@ package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.set;
 
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
 
-public class BitsVectorSetImpl<T extends Enumerable<T>> implements ConjuntoNumerable<T> {
+public class BitsVectorSetImpl<T extends Enumerable> implements ConjuntoNumerable<T> {
 
 	/**
 	 * Arreglo simple donde se guardaran los datos, unico atributo de la clase

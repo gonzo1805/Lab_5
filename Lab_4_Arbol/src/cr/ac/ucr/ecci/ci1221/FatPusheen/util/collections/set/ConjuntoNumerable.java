@@ -2,7 +2,7 @@ package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.set;
 
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterable;
 
-public interface ConjuntoNumerable<T extends Enumerable<T>> extends Iterable<T> {
+public interface ConjuntoNumerable<T extends Enumerable> extends Iterable<T> {
 
 	/**
 	 * Une todos los datos no repetidos de los conjuntos A y B y lo retorna en

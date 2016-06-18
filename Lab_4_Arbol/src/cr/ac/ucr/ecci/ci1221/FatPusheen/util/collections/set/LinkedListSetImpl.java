@@ -6,9 +6,13 @@ import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
 
 public class LinkedListSetImpl<T> implements Conjunto<T> {
 
+	/**
+	 * Atributo de la clase, la lista donde se almacenaran los datos del
+	 * conjunto
+	 */
 	List<T> lista;
 
-	LinkedListSetImpl() {
+	public LinkedListSetImpl() {
 		lista = new LinkedList<T>();
 	}
 

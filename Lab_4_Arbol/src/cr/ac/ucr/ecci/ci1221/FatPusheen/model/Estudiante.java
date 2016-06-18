@@ -1,8 +1,6 @@
 package cr.ac.ucr.ecci.ci1221.FatPusheen.model;
 
-import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.set.Enumerable;
-
-public class Estudiante implements Enumerable<Object>, Comparable<Object> {
+public class Estudiante implements EstudianteI {
 
 	/**
 	 * Atributos: index: sera la posicion en la lista de clase carne: un string
@@ -57,8 +55,9 @@ public class Estudiante implements Enumerable<Object>, Comparable<Object> {
 	@Override
 	public int hashCode() {
 		int resultado;
-		resultado = cedula + edad + Integer.parseInt(carne);
-		resultado = resultado * 500 / 21;
+		int carnet = carne.charAt(0) + Integer.parseInt(carne.substring(1));
+		resultado = cedula + edad + carnet;
+		resultado = (resultado) % 100 ;
 		return resultado;
 	}
 

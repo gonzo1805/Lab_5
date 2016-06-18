@@ -4,7 +4,7 @@ import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.stack.Stack;
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.stack.StackArray;
 
-public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
+public class BinarySearchTree<T extends Comparable> implements Conjunto<T> {
 
 	/**
 	 * Atributo donde estara guardado la raiz del arbol binario de busqueda
@@ -17,8 +17,8 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 	 * @param raiz
 	 *            lo que sera la raiz del nuevo arbol
 	 */
-	public BinarySearchTree(Nodo<T> raiz) {
-		this.raiz = new Nodo(raiz);
+	public BinarySearchTree(T raiz) {
+		this.raiz = new Nodo<T>(raiz);
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 		}
 
 		Iterator<T> itA = A.iterator();// Iterador de A
-		Conjunto<T> resultado = new BinarySearchTree<T>(new Nodo<T>(itA.next()));// Nuevo
+		Conjunto<T> resultado = new BinarySearchTree<T>(itA.next());// Nuevo
 																					// arbol
 
 		while (itA.hasNext()) {// Añade todo A al nuevo arbol
@@ -88,7 +88,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 			return A;
 		}
 		Iterator<T> itA = A.iterator();// Iterador A
-		Conjunto<T> resultado = new BinarySearchTree<T>(new Nodo<T>(itA.next()));// Nuevo
+		Conjunto<T> resultado = new BinarySearchTree<T>(itA.next());// Nuevo
 																					// arbol
 
 		while (itA.hasNext()) {// Iteramos por todo A
@@ -128,7 +128,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Conjunto<T> {
 			return A;
 		}
 		Iterator<T> itA = A.iterator();// Iterador de A
-		Conjunto<T> resultado = new BinarySearchTree<T>(new Nodo<T>(itA.next()));// Nuevo
+		Conjunto<T> resultado = new BinarySearchTree<T>(itA.next());// Nuevo
 																					// arbol
 
 		while (itA.hasNext()) {// Iteramos todo A

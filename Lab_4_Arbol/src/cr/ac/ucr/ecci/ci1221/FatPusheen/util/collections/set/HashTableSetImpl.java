@@ -3,17 +3,18 @@ package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.set;
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.ArrayList;
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.List;
+import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.LinkedList;
 
 public class HashTableSetImpl<T> implements Conjunto<T> {
 
 	List<T>[] lista;
 
 	public HashTableSetImpl() {
-		lista = (ArrayList<T>[]) new Object[1000];
+		lista = (LinkedList<T>[]) new Object[1000];
 	}
 
 	public HashTableSetImpl(int tamano) {
-		lista = (ArrayList<T>[]) new Object[tamano];
+		lista =  (LinkedList<T>[]) new Object[tamano];
 	}
 
 	/**
