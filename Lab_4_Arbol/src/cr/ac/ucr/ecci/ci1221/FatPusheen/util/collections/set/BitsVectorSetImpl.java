@@ -13,7 +13,7 @@ public class BitsVectorSetImpl<T extends Enumerable> implements ConjuntoNumerabl
 	 * Contructor de tamaño standart
 	 */
 	public BitsVectorSetImpl() {
-		lista = (T[]) new Object[1000];
+		lista = (T[]) new Enumerable[1000];
 	}
 
 	/**
@@ -23,7 +23,7 @@ public class BitsVectorSetImpl<T extends Enumerable> implements ConjuntoNumerabl
 	 *            el tamaño personalizado
 	 */
 	public BitsVectorSetImpl(int tamano) {
-		lista = (T[]) new Object[tamano];
+		lista = (T[]) new Enumerable[tamano];
 	}
 
 	/**
@@ -237,7 +237,7 @@ public class BitsVectorSetImpl<T extends Enumerable> implements ConjuntoNumerabl
 	@Override
 	public boolean isEmpty() {
 		Iterator<T> itThis = this.iterator();// Iterador this
-		return (itThis.next() == null);// Si el primer next es null, esta vacia
+		return (itThis.hasNext() == false);// Si el primer hasNext es null, esta vacia
 	}
 
 	/**
@@ -265,7 +265,7 @@ public class BitsVectorSetImpl<T extends Enumerable> implements ConjuntoNumerabl
 		 * luego de donde esta el iterador actualmente, esto para saber si hay
 		 * un dato siguiente en el array y accesarlo mas rapido al usar next
 		 */
-		int actualIterador = 0;
+		int actualIterador = -1;
 		int siguienteDato = actualIterador;
 
 		public It() {
@@ -273,7 +273,7 @@ public class BitsVectorSetImpl<T extends Enumerable> implements ConjuntoNumerabl
 
 		@Override
 		public boolean hasNext() {
-			for (int i = actualIterador; i < lista.length; i++) {
+			for (int i = actualIterador+1; i < lista.length; i++) {
 				if (lista[i] != null) {
 					siguienteDato = i;
 					return true;

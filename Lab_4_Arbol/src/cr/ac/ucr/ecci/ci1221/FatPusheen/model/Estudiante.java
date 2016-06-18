@@ -55,16 +55,17 @@ public class Estudiante implements EstudianteI {
 	@Override
 	public int hashCode() {
 		int resultado;
-		int carnet = carne.charAt(0) + Integer.parseInt(carne.substring(1));
+		/*int carnet = carne.charAt(0) + Integer.parseInt(carne.substring(1));
 		resultado = cedula + edad + carnet;
-		resultado = (resultado) % 100 ;
+		resultado = (resultado) % 100 ;*/
+		resultado = index;
 		return resultado;
 	}
 
 	@Override
 	public int compareTo(Object comparacion) {
-		int primero = Integer.parseInt(this.carne);
-		int segundo = Integer.parseInt(((Estudiante) comparacion).carne);
+		int primero = Integer.parseInt(this.carne.substring(1));
+		int segundo = Integer.parseInt(((Estudiante) comparacion).carne.substring(1));
 		int res = 0;
 		if (primero < segundo) {
 			res = -1;

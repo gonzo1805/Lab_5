@@ -1,7 +1,6 @@
 package cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.set;
 
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.Iterator;
-import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.ArrayList;
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.List;
 import cr.ac.ucr.ecci.ci1221.FatPusheen.util.collections.list.LinkedList;
 
@@ -10,32 +9,11 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 	List<T>[] lista;
 
 	public HashTableSetImpl() {
-		lista = (LinkedList<T>[]) new Object[1000];
+		lista = (LinkedList<T>[]) new LinkedList[1000];
 	}
 
 	public HashTableSetImpl(int tamano) {
-		lista =  (LinkedList<T>[]) new Object[tamano];
-	}
-
-	/**
-	 * Auxiliar para union, ayuda a hacer la iteracion completa de los buckets
-	 * en la lista para completar la union
-	 * 
-	 * @param hash
-	 *            el bucket a iterar
-	 * @param con
-	 *            el conjunto a comparar
-	 */
-	private void auxiliarUnion(int hash, Conjunto<T> con) {
-		Iterator<T> itThis = this.lista[hash % lista.length].iterator();// Iterador
-																		// del
-																		// bucket
-		while (itThis.hasNext()) {// Iteramos el bucket
-			T dato = itThis.next();
-			if (!con.contains(dato)) {// Si no esta en con
-				con.add(dato);// Lo añade
-			}
-		}
+		lista = (LinkedList<T>[]) new LinkedList[tamano];
 	}
 
 	/**
@@ -71,32 +49,13 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 		}
 		while (itB.hasNext()) {// Itera por B
 			T dato = itB.next();
-			auxiliarUnion(dato.hashCode() % lista.length, resultado);// Auxiliar
+			if (!resultado.contains(dato)) {
+				resultado.add(dato);
+			}
+			// auxiliarUnion(dato.hashCode() % lista.length, resultado);//
+			// Auxiliar
 		}
 		return resultado;// Retorna resultado
-	}
-
-	/**
-	 * Auxiliar para la interseccion, itera por cada bucket enviado y añade los
-	 * datos adecuados de la intersccion entre los conjuntos
-	 * 
-	 * @param hash
-	 *            el bucket a iterar
-	 * @param con
-	 *            el conjunto a comparar
-	 * @param resultado
-	 *            el conjunto a retornar en el principal
-	 */
-	private void auxiliarInsterction(int hash, Conjunto<T> con, Conjunto<T> resultado) {
-		Iterator<T> itThis = this.lista[hash % lista.length].iterator();// Iterador
-																		// del
-																		// bucket
-		while (itThis.hasNext()) {// Iteramos por el bucket
-			T dato = itThis.next();
-			if (con.contains(dato)) {// Si lo contiene el conjunto a comparar
-				resultado.add(dato);// Lo añade en resultado
-			}
-		}
 	}
 
 	/**
@@ -127,34 +86,13 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 
 		while (itB.hasNext()) {// Iteramos por B
 			T dato = itB.next();
-			auxiliarInsterction(dato.hashCode() % lista.length, A, resultado);// Auxiliar
+			if (resultado.contains(dato)) {
+				resultado.add(dato);
+			}
+			// auxiliarInsterction(dato.hashCode() % lista.length, A,
+			// resultado);// Auxiliar
 		}
 		return resultado;// Retorna resultado
-	}
-
-	/**
-	 * Auxiliar para diferencia, itera por cada bucket enviado buscando los
-	 * elementos adecuados para la correcta diferencia entre los conjuntos
-	 * originales
-	 * 
-	 * @param hash
-	 *            el bucket a iterar
-	 * @param con
-	 *            el conjunto a comparar
-	 * @param resultado
-	 *            el conjunto que contendra los elementos de la diferencia
-	 */
-	private void auxiliarDifference(int hash, Conjunto<T> con, Conjunto<T> resultado) {
-		Iterator<T> itThis = this.lista[hash % lista.length].iterator();// Iterador
-																		// del
-																		// bucket
-		while (itThis.hasNext()) {// Iteramos el bucket
-			T dato = itThis.next();
-			if (!con.contains(dato)) {// Si no lo contiene el conjunto a
-										// comparar
-				resultado.add(dato);// Lo añadimos a resultado
-			}
-		}
 	}
 
 	/**
@@ -184,7 +122,11 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 
 		while (itA.hasNext()) {// Iteramos A
 			T dato = itA.next();
-			auxiliarDifference(dato.hashCode() % lista.length, B, resultado);// Auxiliar
+			if (!resultado.contains(dato)) {
+				resultado.add(dato);
+			}
+			// auxiliarDifference(dato.hashCode() % lista.length, B,
+			// resultado);// Auxiliar
 		}
 
 		return resultado;// Retorna resultado
@@ -221,7 +163,7 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 	 */
 	@Override
 	public void clear() {
-		lista = (ArrayList<T>[]) new Object[lista.length];
+		lista = (LinkedList<T>[]) new LinkedList[lista.length];
 	}
 
 	/**
@@ -242,7 +184,7 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 				// grande que la lista
 				// en si
 				// Agranda la lista
-				List<T>[] listaNueva = (ArrayList<T>[]) new Object[dato.hashCode() % lista.length + 1];
+				List<T>[] listaNueva = (LinkedList<T>[]) new LinkedList[dato.hashCode() % lista.length + 1];
 
 				Iterator<T> itThis = this.iterator();// Iterador de this
 
@@ -253,6 +195,9 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 				}
 
 				this.lista = listaNueva;
+			}
+			if (this.lista[dato.hashCode() % lista.length] == null) {
+				this.lista[dato.hashCode() % lista.length] = new LinkedList<T>();
 			}
 			this.lista[dato.hashCode() % lista.length].add(dato);// Añade el
 																	// dato a su
@@ -367,15 +312,16 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 	 * @param <E>
 	 */
 	private class It<E> implements Iterator<E> {
-		int actualIterador = 0;
+		int actualIterador = -1;
 		int siguienteDato = actualIterador;
+		Iterator<T> it;
 
 		public It() {
 		}
 
 		@Override
 		public boolean hasNext() {
-			for (int i = actualIterador; i < lista.length; i++) {
+			for (int i = actualIterador + 1; i < lista.length; i++) {
 				if (lista[i] != null) {
 					siguienteDato = i;
 					return true;
@@ -391,8 +337,12 @@ public class HashTableSetImpl<T> implements Conjunto<T> {
 				return null;
 			} else {
 				actualIterador = siguienteDato;
-				return (E) lista[siguienteDato];
+				it = lista[siguienteDato].iterator();
+				if (it.hasNext()) {
+					return (E) it.next();
+				}
 			}
+			return null;
 		}
 	}
 
